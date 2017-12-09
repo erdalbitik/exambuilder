@@ -6,18 +6,17 @@ var system = require("system");
 page.paperSize = {
   format: "A4",
   orientation: "portrait",
-  margin: {left:"1cm", right:"1cm", top:"1.5cm", bottom:"1cm"},
+  margin: {left:"1cm", right:"1cm", top:"2.5cm", bottom:"1cm"},
   footer: {
     height: "0.5cm",
     contents: phantom.callback(function(pageNum, numPages) {
-      if (pageNum == numPages) {
-           return "<div style='text-align:center;'><small>" + pageNum +" / " + numPages + "</small><span style='float:right;'>Test Bitti</span></div>";
-      }
-      return "<div style='text-align:center;'><small>" + pageNum +" / " + numPages + "</small></div>";
+    	if(system.args[3] && system.args[3] == 'true') {
+    		return "<div style='text-align:center;'><small>" + pageNum +" / " + numPages + "</small></div>";
+    	} else return "";
     })
   }
 };
-page.zoomFactor = 1.0;
+page.zoomFactor = (system.os.name === 'linux'?  0.654545: 0.9)
 // assume the file is local, so we don't handle status errors
 page.open(system.args[1], function (status) {
   // export to target (can be PNG, JPG or PDF!)

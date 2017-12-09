@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
- * HTML-Sheets-of-Paper (https://github.com/delight-im/HTML-Sheets-of-Paper)
- * Copyright (c) delight.im (https://www.delight.im/)
- * Licensed under the MIT License (https://opensource.org/licenses/MIT)
--->
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -111,6 +106,7 @@
 					/* Force page breaks after each .page element of the document */
 					page-break-after: always;
 				}
+				
 			}
 
 			.page {
@@ -123,9 +119,9 @@
 
 				/* Reflect the actual page margin/padding on paper in the screen rendering (must match margin from @page rule) */
 				padding-left: 1.5cm;
-				padding-top: 2.5cm;
+				padding-top: 2cm;
 				padding-right: 1.5cm;
-				padding-bottom: 1.5cm;
+				padding-bottom: 1.0cm;
 			}
 			/* Use CSS Paged Media to switch from continuous documents to sheet-like documents with separate pages */
 			@page {
@@ -136,9 +132,9 @@
 
 				/* Margin per single side of the page */
 				margin-left: 1.5cm;
-				margin-top: 2.5cm;
+				margin-top: 2cm;
 				margin-right: 1.5cm;
-				margin-bottom: 1.5cm;
+				margin-bottom: 1.0cm;
 			}
 			
 			table { border-collapse: collapse; border-spacing: 0; }
@@ -154,20 +150,17 @@
 		#if ($pages.size() != 0)
 		#foreach( $page in $pages )
 		<div class="page" contenteditable="true">
-			<table style="width:100%;">
+			#if ($page.questions.size() != 0)
+			<table style="width:90%;">
 			  <tr>
 			    <td>
-				    #foreach( $soruTableHtml in $page.leftQuestions )
+				    #foreach( $soruTableHtml in $page.questions )
 					$soruTableHtml
 					#end
 				</td>
-			    <td style="margin-left: 10px;">
-			    	#foreach( $soruTableHtml in $page.rightQuestions )
-					$soruTableHtml
-					#end
-			    </td>
 			  </tr>
 			</table>
+			#end
 		</div>
 		#end
 		#end

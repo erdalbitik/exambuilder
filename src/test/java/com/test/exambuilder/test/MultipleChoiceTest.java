@@ -8,12 +8,12 @@ import org.junit.Test;
 
 import com.ebitik.exambuilder.Choice;
 import com.ebitik.exambuilder.ColumnType;
+import com.ebitik.exambuilder.Essay;
 import com.ebitik.exambuilder.ExamBuilder;
 import com.ebitik.exambuilder.MultipleChoice;
 import com.ebitik.exambuilder.PaperType;
 import com.ebitik.exambuilder.Question;
-import com.ebitik.exambuilder.httl.ExamPages;
-import com.ebitik.exambuilder.service.PhantomService;
+import com.ebitik.exambuilder.service.PuppeteerService;
 
 public class MultipleChoiceTest {
 	
@@ -68,20 +68,65 @@ public class MultipleChoiceTest {
 	@Test
 	public void getSoruHeight() throws Exception {
 		String xhtml = getQuestion().getAsXHTML(false);
-		int elementHeight = PhantomService.getHtmlElementHeight(xhtml);
+		int elementHeight = PuppeteerService.getQuestionTableHeight(xhtml);
 		System.out.println(elementHeight);
 	}
 	
 	@Test
-	public void createBigHtml() throws Exception {
+	public void createCiftKolonHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
-		for (int i = 0; i < 20; i++) {
-			Question question = getRandomQuestion(i+1);
+		for (int i = 0; i < 30; i++) {
+			Question question = getRandomQuestion(i+1, ColumnType.TWO_COLUMN);
 			qList.add(question);
 		}
 		ExamBuilder eb = new ExamBuilder();
 		eb.questionList(qList);
 		eb.savePath("C:\\dev\\sil\\bih.pdf");
+		//eb.templatePath(Util.getFilePathFromResourceFolder("templates/two_column_blank_page.pdf"));
+		eb.headerText("MEHMETÇİK SELEN İLKOKULU FEN BİLGİSİ SINAVI 2017");
+		eb.build();
+	}
+	
+	@Test
+	public void createTekKolonHtml() throws Exception {
+		List<Question> qList = new ArrayList<>();
+		
+		Question que = new Essay("1", PaperType.A4, ColumnType.ONE_COLUMN, "Osmanlının yıkılışını anlatınız?", "<div style='height: 300px;'>&nbsp;</div>");
+		qList.add(que);
+		
+		for (int i = 1; i <= 6; i++) {
+			Question question = getRandomQuestion(i+1, ColumnType.ONE_COLUMN);
+			qList.add(question);
+		}
+		
+		ExamBuilder eb = new ExamBuilder();
+		eb.columnType(ColumnType.ONE_COLUMN);
+		eb.questionList(qList);
+		eb.savePath("C:\\dev\\sil\\bih.pdf");
+		eb.copyProtection(Boolean.TRUE);
+		eb.smallStamper("erdal");
+		eb.bigStamper("CUMALI");
+		eb.headerText("MEHMETÇİK SELEN İLKOKULU FEN BİLGİSİ SINAVI 2017");
+		//eb.templatePath(Util.getFilePathFromResourceFolder("templates/two_column_blank_page.pdf"));
+		eb.build();
+	}
+	
+	@Test
+	public void createTekKolonEssayHtml() throws Exception {
+		List<Question> qList = new ArrayList<>();
+		for (int i = 0; i < 20; i++) {
+			Question question = getRandomQuestion(i+1, ColumnType.ONE_COLUMN);
+			qList.add(question);
+		}
+		ExamBuilder eb = new ExamBuilder();
+		eb.columnType(ColumnType.ONE_COLUMN);
+		eb.questionList(qList);
+		eb.savePath("C:\\dev\\sil\\bih.pdf");
+		eb.copyProtection(Boolean.TRUE);
+		eb.smallStamper("erdal");
+		eb.bigStamper("CUMALI");
+		eb.headerText("MEHMETÇİK SELEN İLKOKULU FEN BİLGİSİ SINAVI 2017");
+		//eb.templatePath(Util.getFilePathFromResourceFolder("templates/two_column_blank_page.pdf"));
 		eb.build();
 	}
 	
@@ -210,8 +255,8 @@ public class MultipleChoiceTest {
 	
 	
 	
-	private Question getRandomQuestion(int number) {
-		return new MultipleChoice(number+"", PaperType.A4, ColumnType.TWO_COLUMN, soruList[random.nextInt(soruList.length)], getRandomChooseList());
+	private Question getRandomQuestion(int number, ColumnType columnType) {
+		return new MultipleChoice(number+"", PaperType.A4, columnType, soruList[random.nextInt(soruList.length)], getRandomChooseList());
 	}
 	
 	private List<Choice> getRandomChooseList() {

@@ -3,16 +3,17 @@ package com.ebitik.exambuilder.httl;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TwoColumnPage {
+public class TwoColumnPage implements Page {
 	
-	private int leftBlankHeight = 950;
+	private int leftBlankHeight = 1100;
 	
-	private int rightBlankHeight = 950;
+	private int rightBlankHeight = 1100;
 	
 	private List<String> leftQuestions;
 	
 	private List<String> rightQuestions;
 	
+	@Override
 	public boolean addQuestion(String question, int height) {
 		//oncelikle sagda soru varmi diye bakilir. varsa oradan devam edilir.
 		if(getRightQuestions().size() > 0) {

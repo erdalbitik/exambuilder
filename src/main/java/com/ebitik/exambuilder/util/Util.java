@@ -60,7 +60,6 @@ public class Util {
 				}
 			}
 
-
 			tidy.pprint(dom, fos);
 			String xhtml = fos.toString("UTF-8");
 			xhtml = xhtml.replace("<head>", "<head><style>"+columnType.css+"</style>");

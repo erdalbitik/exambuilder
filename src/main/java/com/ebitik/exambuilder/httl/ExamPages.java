@@ -3,29 +3,45 @@ package com.ebitik.exambuilder.httl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ebitik.exambuilder.ColumnType;
+
 public class ExamPages {
 	
-	private List<TwoColumnPage> pages = new ArrayList<>();
+	private List<Page> pages = new ArrayList<>();
+	
+	private ColumnType columnType;
+	
+	public ExamPages(ColumnType columnType) {
+		this.columnType = columnType;
+	}
 	
 	public void addQuestion(String question, int height) {
 		boolean addedQuestion = getLastPage().addQuestion(question, height);
 		//eklenemezse yeni sayfa olustur.
 		if(!addedQuestion) {
-			pages.add(new TwoColumnPage());
+			addNewPage();
 			addedQuestion = getLastPage().addQuestion(question, height);
 		}
 	}
 	
-	private TwoColumnPage getLastPage() {
-		if(pages.size() == 0) pages.add(new TwoColumnPage());
+	private Page getLastPage() {
+		if(pages.size() == 0) addNewPage();
 		return pages.get(pages.size()-1);
 	}
+	
+	private void addNewPage() {
+		if(ColumnType.ONE_COLUMN.equals(columnType)) {
+			pages.add(new OneColumnPage());
+		} else {
+			pages.add(new TwoColumnPage());
+		}
+	}
 
-	public List<TwoColumnPage> getPages() {
+	public List<Page> getPages() {
 		return pages;
 	}
 
-	public void setPages(List<TwoColumnPage> pages) {
+	public void setPages(List<Page> pages) {
 		this.pages = pages;
 	}
 
