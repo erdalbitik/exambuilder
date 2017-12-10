@@ -9,7 +9,20 @@
 
 ### Maven ###
 
-* Dependency olrak nasıl eklenebileceği yakında buraya yazılacaktır.
+* Öncekilikle sisteminize maven kurulumu yapın. Bunun için maven klasorunu indirip path içinde gostermeniz gerekiyor.
+* JAVA_HOME set edilmesi lazım. bunun için jdk klasorunuzu gosterin
+* git kurulumu yapın. bunun için https://www.atlassian.com/git/tutorials/install-git adresinden indirip kurun
+* git clone https://erdalbitik@bitbucket.org/sinavapp/exambuilder.git komutunu çalıştırın. Parola ve kullanıcı adınızı girin.
+* cd exambuilder diyerek proje klasorune girin.
+* mvn clean install diyerek kutuphaneyi local maven'iniza eklemiş olursunuz.
+* Bu adımdan itibaren projenize dependency olarak ekleyebilirsiniz.
+
+<dependency>
+     <groupId>com.ebitik</groupId>
+     <artifactId>exambuilder</artifactId>
+     <version>0.0.1</version>
+</dependency>
+
 
 ### Yetenekler ###
 
