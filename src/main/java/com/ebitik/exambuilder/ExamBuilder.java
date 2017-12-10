@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.VelocityEngine;
 import org.w3c.dom.NodeList;
@@ -79,6 +80,12 @@ public class ExamBuilder {
 		ExamPages examPages = new ExamPages(columnType);
 		for (Question question : questionList) {
 			examPages.addQuestion(question.getAsXHTML(true), question.getHeight());
+			if(question instanceof Group) {
+				List<Question> groupQuestions = ((Group) question).getQuestionList();
+				for (Question gq : groupQuestions) {
+					examPages.addQuestion(gq.getAsXHTML(true), gq.getHeight());
+				}
+			}
 		}
 
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -111,6 +118,9 @@ public class ExamBuilder {
 	}
 
 	private void manipulatePdf(String savePath, String baseFilePath) throws Exception {
+		//incase any parent folder is not exist
+		FileUtils.forceMkdirParent(new File(savePath));
+		//pdf reader
 		PdfReader reader = new PdfReader(baseFilePath);
 		PdfStamper stamper = new PdfStamper(reader, new FileOutputStream(savePath));
 		//stamper.insertPage(reader.getNumberOfPages() + 1, reader.getPageSizeWithRotation(1));

@@ -10,6 +10,7 @@ import com.ebitik.exambuilder.Choice;
 import com.ebitik.exambuilder.ColumnType;
 import com.ebitik.exambuilder.Essay;
 import com.ebitik.exambuilder.ExamBuilder;
+import com.ebitik.exambuilder.Group;
 import com.ebitik.exambuilder.MultipleChoice;
 import com.ebitik.exambuilder.PaperType;
 import com.ebitik.exambuilder.Question;
@@ -99,10 +100,19 @@ public class MultipleChoiceTest {
 			qList.add(question);
 		}
 		
+		List<Question> groupQList = new ArrayList<>();
+		for (int i = qList.size(); i < qList.size()+4; i++) {
+			Question question = getRandomQuestion(i+1, ColumnType.ONE_COLUMN);
+			groupQList.add(question);
+		}
+		
+		Group group = new Group("5", PaperType.A4, ColumnType.ONE_COLUMN, "Aşağıdaki soruları cevaplayınız?", groupQList);
+		qList.add(group);
+		
 		ExamBuilder eb = new ExamBuilder();
 		eb.columnType(ColumnType.ONE_COLUMN);
 		eb.questionList(qList);
-		eb.savePath("C:\\dev\\sil\\bih.pdf");
+		eb.savePath("C:\\dev\\sile\\bih.pdf");
 		eb.copyProtection(Boolean.TRUE);
 		eb.smallStamper("erdal");
 		eb.bigStamper("CUMALI");

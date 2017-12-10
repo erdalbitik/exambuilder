@@ -34,7 +34,6 @@ public class Essay implements Question {
 	}
 	
 	private void createHtml(String questionNumber, PaperType paperType, ColumnType columnType) throws Exception {
-		
 		if("1".equals(questionNumber)) {
 			htmlTemplate = htmlTemplate.replace("${{optionalHeaderLine}}", "<tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr>");
 		} else {
