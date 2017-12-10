@@ -6,6 +6,7 @@
 	<version>0.0.1</version>
 	<name>Exam Builder</name>
 	<description>An exam builder, creates pdf with given questions</description>
+	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,5 +64,9 @@
 		</dependency>
 
 	</dependencies>
+
+	<build>
+		<finalName>exambuilder</finalName>
+	</build>
 
 </project>
