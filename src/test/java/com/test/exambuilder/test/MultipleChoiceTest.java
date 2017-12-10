@@ -66,14 +66,14 @@ public class MultipleChoiceTest {
 		}
 	}*/
 	
-	//@Test
+	///@Test
 	public void getSoruHeight() throws Exception {
 		String xhtml = getQuestion().getAsXHTML(false);
 		int elementHeight = PuppeteerService.getQuestionTableHeight(xhtml);
 		System.out.println(elementHeight);
 	}
 	
-	//@Test
+	///@Test
 	public void createCiftKolonHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		for (int i = 0; i < 30; i++) {
@@ -88,7 +88,7 @@ public class MultipleChoiceTest {
 		eb.build();
 	}
 	
-	//@Test
+	///@Test
 	public void createTekKolonHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		
@@ -121,7 +121,7 @@ public class MultipleChoiceTest {
 		eb.build();
 	}
 	
-	//@Test
+	///@Test
 	public void createTekKolonEssayHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		for (int i = 0; i < 20; i++) {
