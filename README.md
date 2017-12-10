@@ -16,13 +16,13 @@
 * cd exambuilder diyerek proje klasorune girin.
 * mvn clean install diyerek kutuphaneyi local maven'iniza eklemiş olursunuz.
 * Bu adımdan itibaren projenize dependency olarak ekleyebilirsiniz.
-
+```xml
 <dependency>
      <groupId>com.ebitik</groupId>
      <artifactId>exambuilder</artifactId>
      <version>0.0.1</version>
 </dependency>
-
+```xml
 
 ### Yetenekler ###
 
