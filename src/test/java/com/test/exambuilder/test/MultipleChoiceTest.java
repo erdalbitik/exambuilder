@@ -121,6 +121,39 @@ public class MultipleChoiceTest {
 		eb.build();
 	}
 	
+	//@Test
+	public void createCiftKolonFullHtml() throws Exception {
+		List<Question> qList = new ArrayList<>();
+		
+		Question que = new Essay("1", PaperType.A4, ColumnType.TWO_COLUMN, "Osmanlının yıkılışını anlatınız?", "<div style='height: 300px;'>&nbsp;</div>");
+		qList.add(que);
+		
+		for (int i = 1; i <= 6; i++) {
+			Question question = getRandomQuestion(i+1, ColumnType.TWO_COLUMN);
+			qList.add(question);
+		}
+		
+		List<Question> groupQList = new ArrayList<>();
+		for (int i = qList.size(); i < qList.size()+4; i++) {
+			Question question = getRandomQuestion(i+1, ColumnType.TWO_COLUMN);
+			groupQList.add(question);
+		}
+		
+		Group group = new Group("5", PaperType.A4, ColumnType.TWO_COLUMN, "Aşağıdaki gruplanmış soruları cevaplayınız?", groupQList);
+		qList.add(group);
+		
+		ExamBuilder eb = new ExamBuilder();
+		eb.columnType(ColumnType.TWO_COLUMN);
+		eb.questionList(qList);
+		eb.savePath("C:\\dev\\sile\\bih.pdf");
+		eb.copyProtection(Boolean.TRUE);
+		eb.smallStamper("erdal.bitik");
+		eb.bigStamper("WATERMARK");
+		eb.headerText("MEHMETÇİK SELEN İLKOKULU 7/A FEN BİLGİSİ SINAVI 2017");
+		//eb.templatePath(Util.getFilePathFromResourceFolder("templates/two_column_blank_page.pdf"));
+		eb.build();
+	}
+	
 	///@Test
 	public void createTekKolonEssayHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
