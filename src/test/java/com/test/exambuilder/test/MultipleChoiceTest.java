@@ -121,7 +121,7 @@ public class MultipleChoiceTest {
 		eb.build();
 	}
 	
-	//@Test
+	@Test
 	public void createCiftKolonFullHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		
@@ -136,6 +136,39 @@ public class MultipleChoiceTest {
 		List<Question> groupQList = new ArrayList<>();
 		for (int i = qList.size(); i < qList.size()+4; i++) {
 			Question question = getRandomQuestion(i+1, ColumnType.TWO_COLUMN);
+			groupQList.add(question);
+		}
+		
+		Group group = new Group("5", PaperType.A4, ColumnType.TWO_COLUMN, "Aşağıdaki gruplanmış soruları cevaplayınız?", groupQList);
+		qList.add(group);
+		
+		ExamBuilder eb = new ExamBuilder();
+		eb.columnType(ColumnType.TWO_COLUMN);
+		eb.questionList(qList);
+		eb.savePath("C:\\dev\\sile\\bih.pdf");
+		eb.copyProtection(Boolean.TRUE);
+		eb.smallStamper("erdal.bitik");
+		eb.bigStamper("WATERMARK");
+		eb.headerText("MEHMETÇİK SELEN İLKOKULU 7/A FEN BİLGİSİ SINAVI 2017");
+		//eb.templatePath(Util.getFilePathFromResourceFolder("templates/two_column_blank_page.pdf"));
+		eb.build();
+	}
+	
+	@Test
+	public void createCiftKolonLowHtml() throws Exception {
+		List<Question> qList = new ArrayList<>();
+		
+		Question que = new Essay("1", PaperType.A4, ColumnType.TWO_COLUMN, "Osmanlının yıkılışını anlatınız?", "<div style='height: 300px;'>&nbsp;</div>");
+		qList.add(que);
+		
+		for (int i = 1; i <= 20; i++) {
+			Question question = getSemiRandomQuestion(i+1, ColumnType.TWO_COLUMN);
+			qList.add(question);
+		}
+		
+		List<Question> groupQList = new ArrayList<>();
+		for (int i = qList.size(); i < qList.size()+4; i++) {
+			Question question = getSemiRandomQuestion(i+1, ColumnType.TWO_COLUMN);
 			groupQList.add(question);
 		}
 		
@@ -184,7 +217,6 @@ public class MultipleChoiceTest {
 	}
 	
 	String[] soruList = {
-			"<img src='https://www.w3schools.com/bootstrap/newyork.jpg' alt='Cinque Terre'> Ben kaç yaşımdayım? Bil bakalım.",
 			". Any good company needs Direct competitors!Copycats validate your startup’s business. Their existence",
 			"indicates that there’s money in the market you’re trying to capture and is worth fighting for. That is why",
 			"VCs always ask ‘Who are your competitors?’. If you have no competitors, smart people will always question if",
@@ -222,7 +254,6 @@ public class MultipleChoiceTest {
 			"<h2>Necessary ye contented newspaper zealously breakfast he prevailed</h2><p>He my polite be object oh change. Consider no mr am overcame yourself throwing sociable children. Hastily her totally conduct may. My solid by stuff first smile fanny. Humoured how advanced mrs elegance sir who. Home sons when them dine do want to. Estimating themselves unsatiable imprudence an he at an. Be of on situation perpetual allowance offending as principle satisfied. Improved carriage securing are desirous too.</p>"};
 	
 	String[] cevapList = {
-			"<img src='https://yt3.ggpht.com/-dvk2Bdh1crE/AAAAAAAAAAI/AAAAAAAAAAA/uLYmsZcv6D4/s48-c-k-no-mo-rj-c0xffffff/photo.jpg' alt='Cinque Terre'>  aosdjaosı soadıjaosd .",
 			"الأَبْجَدِيَّة العَرَبِيَّة‎ Bu bir arapça metin. الحُرُوف العَرَبِيَّة",
 			"الأَبْجَدِيَّة العَرَبِيَّة‎ Bu bir arapça metin1. الحُرُوف العَرَبِيَّة",
 			"الأَبْجَدِيَّة العَرَبِيَّة‎ Bu bir arapça metin2. الحُرُوف العَرَبِيَّة",
@@ -302,11 +333,25 @@ public class MultipleChoiceTest {
 		return new MultipleChoice(number+"", PaperType.A4, columnType, soruList[random.nextInt(soruList.length)], getRandomChooseList());
 	}
 	
+	private Question getSemiRandomQuestion(int number, ColumnType columnType) {
+		return new MultipleChoice(number+"", PaperType.A4, columnType, soruList[random.nextInt(1)], getSemiRandomChooseList());
+	}
+	
 	private List<Choice> getRandomChooseList() {
 		List<Choice> choiceList = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
 			Choice choice = new Choice();
 			choice.setText(cevapList[random.nextInt(cevapList.length)]);
+			choiceList.add(choice);
+		}
+		return choiceList;
+	}
+	
+	private List<Choice> getSemiRandomChooseList() {
+		List<Choice> choiceList = new ArrayList<>();
+		for (int i = 0; i < 5; i++) {
+			Choice choice = new Choice();
+			choice.setText(cevapList[random.nextInt(1)]);
 			choiceList.add(choice);
 		}
 		return choiceList;

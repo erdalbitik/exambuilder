@@ -5,9 +5,9 @@ import java.util.List;
 
 public class TwoColumnPage implements Page {
 	
-	private int leftBlankHeight = 1100;
+	private int leftBlankHeight = 982;
 	
-	private int rightBlankHeight = 1100;
+	private int rightBlankHeight = 982;
 	
 	private List<String> leftQuestions;
 	

@@ -3,6 +3,7 @@ package com.ebitik.exambuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import com.ebitik.exambuilder.service.PuppeteerService;
+import com.ebitik.exambuilder.service.QuestionSizeMap;
 import com.ebitik.exambuilder.util.Util;
 
 public class Essay implements Question {
@@ -21,7 +22,7 @@ public class Essay implements Question {
 	
 	private String table;
 	
-	private int height = 0;
+	private Integer height;
 	
 	private String htmlTemplate = "<table id='questionTable' style='table-layout: fixed;'> <tbody> ${{optionalHeaderLine}}<tr> <td valign='top'> <b>${{questionNumber}}.</b></td><td> <div class='cont'> ${{questionText}}</div></td></tr> <tr> <td></td> <td> <div class=\"cevapCont\"> ${{answerText}} </div> </td></tr></tbody> </table>";
 	
@@ -59,8 +60,12 @@ public class Essay implements Question {
 
 	@Override
 	public int getHeight() throws Exception {
-		if(height == 0) {
+		if(height != null && height > 0) return height;
+		String mapHtml = xhtml.replaceAll("(<td valign='top'><b>)[^&]*(.</b></td>)", "$1$2");
+		height = QuestionSizeMap.getSize(mapHtml);
+		if(height == null) {
 			height = PuppeteerService.getQuestionTableHeight(getAsXHTML(false));
+			QuestionSizeMap.putSize(mapHtml, height);
 		}
 		return height;
 	}

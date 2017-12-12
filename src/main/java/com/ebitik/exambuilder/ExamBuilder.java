@@ -18,10 +18,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.VelocityEngine;
+import org.mapdb.DB;
+import org.mapdb.DBMaker;
+import org.mapdb.Serializer;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
 
@@ -68,13 +72,15 @@ public class ExamBuilder {
 	List<Question> questionList;
 
 	private String savePath;
-
+	
 	public ExamBuilder() {
 		Properties prop = new Properties();
 		prop.setProperty("resource.loader", "class");
 		prop.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 		velocityEngine = new VelocityEngine(prop);
 	}
+	
+	
 
 	public void build() throws Exception {
 		ExamPages examPages = new ExamPages(columnType);
