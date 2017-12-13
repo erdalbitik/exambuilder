@@ -44,12 +44,15 @@
 * Verilen başlığı tek satırda gösterme (Sınav adı gibi)
 * Soruları verilen sıraya gore basma
 
-### Eksiklikler ###
+### Eksiklikler && Yapılması Gereken İşler ###
 
 * 20 soruluk bir pdf oluşturma işlemi eğer soruların boyutu onceden belirlenmediyse 20-25 sn surebiliyor. (Kendi laptopumda)
+  * Bir soru daha once pdf 'e donusturulduyse exambuilder bu sorunun boyutunu user_home directorysinde tuttugu bir db de kaydeder. Sonraki işlemler oldukça hızlı olur. 20 sn'lik bir işlem 7 saniyeye düştü. 
 * HTML formatında header ve footer ekleme ozelliğinin olmayışı. Bunu ilerleyen aşamada yapmaya çalışacağım. 
 * Gömülü kullanılan Türkçe label'lar. Örneğin Ad - soyad, Sınav Bitti, Sonraki sayfaya geçiniz gibi. Bunların verilen locale ile kullanılması lazım. Kullanıcı kaydedilirken onun locale bilgisi de alınmalı.
 * Maven repository problemi. Bunun için private repository kullanmak lazım yada bir maven repository bulmak lazım.
+* Çoktan seçmeli bir sorunun tüm şıkları belli bir kısalıktaysa bunun şıklarını altalta gostermek yerine yan yana da gosterebilmeliyiz. Bu sayede yerden kazanç sağlamış oluruz.
+* Sorular arası boşluğun kullanıcı tarafından verilebiliyor olması lazım. Şu anda sabit bir boşluk var. Bunu yapmamız işlem gerfektiren sorular için kolaylık sağlayacak.
 
 ### Kurulum ###
 
