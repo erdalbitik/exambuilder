@@ -122,11 +122,11 @@ public class MultipleChoiceTest {
 		eb.build();
 	}
 	
-	@Test
+	//@Test
 	public void createCiftKolonFullHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		
-		Question que = new Essay("1", PaperType.A4, ColumnType.TWO_COLUMN, 300, "Osmanlının yıkılışını anlatınız?");
+		Question que = new Essay("1", PaperType.A4, ColumnType.TWO_COLUMN, 300, "19. yy Osmanlının mimarisini anlatınız?");
 		qList.add(que);
 		
 		for (int i = 1; i <= 19; i++) {
@@ -160,7 +160,7 @@ public class MultipleChoiceTest {
 		eb.build();
 	}
 	
-	@Test
+	//@Test
 	public void createCiftKolonLowHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		
