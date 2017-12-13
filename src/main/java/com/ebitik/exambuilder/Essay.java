@@ -7,67 +7,78 @@ import com.ebitik.exambuilder.service.QuestionSizeMap;
 import com.ebitik.exambuilder.util.Util;
 
 public class Essay implements Question {
-	
+
 	private String questionText;
-	
-	private String answerText;
-	
+
 	private PaperType paperType;
-	
+
 	private ColumnType columnType;
-	
+
 	private String questionNumber;
-	
+
 	private String xhtml;
-	
+
 	private String table;
-	
+
 	private Integer height;
-	
-	private String htmlTemplate = "<table id='questionTable' style='table-layout: fixed;'> <tbody> ${{optionalHeaderLine}}<tr> <td valign='top'> <b>${{questionNumber}}.</b></td><td> <div class='cont'> ${{questionText}}</div></td></tr> <tr> <td></td> <td> <div class=\"cevapCont\"> ${{answerText}} </div> </td></tr></tbody> </table>";
-	
-	public Essay(String questionNumber, PaperType paperType, ColumnType columnType, String questionText, String answerText) {
+
+	private Integer emptySpaceHeight;
+
+	private String htmlTemplate = "<table id='questionTable' style='table-layout: fixed;'> <tbody> <tr> <td valign='top'> <b>${{questionNumber}}.</b></td><td> <div class='cont'> ${{questionText}}</div></td></tr> </tbody> </table>";
+
+	public Essay(String questionNumber, PaperType paperType, ColumnType columnType, Integer emptySpaceHeight, String questionText) {
 		this.questionText = questionText;
 		this.paperType = paperType;
 		this.questionNumber = questionNumber;
-		this.answerText = answerText;
 		this.columnType = columnType;
+		this.emptySpaceHeight = emptySpaceHeight;
 	}
-	
+
 	private void createHtml(String questionNumber, PaperType paperType, ColumnType columnType) throws Exception {
-		if("1".equals(questionNumber)) {
-			htmlTemplate = htmlTemplate.replace("${{optionalHeaderLine}}", "<tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr><tr><td>&nbsp;</td></tr>");
-		} else {
-			htmlTemplate = htmlTemplate.replace("${{optionalHeaderLine}}", "");
-		}
-		
 		htmlTemplate = htmlTemplate.replace("${{questionNumber}}", questionNumber);
 		htmlTemplate = htmlTemplate.replace("${{questionText}}", questionText);
-		htmlTemplate = htmlTemplate.replace("${{answerText}}", answerText);
-		
+
 		xhtml = Util.htmlToXhtml(htmlTemplate, paperType, columnType);
 		table = StringUtils.substringBetween(xhtml, "<body>", "</body>");
 	}
-	
+
 	@Override
-	public String getAsXHTML(boolean isTable) throws Exception {
+	public String getAsXHTML(boolean isTable) {
 		if(xhtml == null || "".equals(xhtml)) {
-			createHtml(questionNumber, paperType, columnType);
+			try {
+				createHtml(questionNumber, paperType, columnType);
+			} catch (Exception e) {
+				height = 100;//TODO: magic number duzelt
+				System.out.println(e);
+			}
 		}
 		if(isTable) return table;
 		return xhtml;
 	}
 
 	@Override
-	public int getHeight() throws Exception {
+	public int getHeight() {
 		if(height != null && height > 0) return height;
+		if(StringUtils.isEmpty(xhtml)) xhtml = getAsXHTML(false);
 		String mapHtml = xhtml.replaceAll("(<td valign='top'><b>)[^&]*(.</b></td>)", "$1$2");
 		height = QuestionSizeMap.getSize(mapHtml);
 		if(height == null) {
-			height = PuppeteerService.getQuestionTableHeight(getAsXHTML(false));
+			try {
+				height = PuppeteerService.getQuestionTableHeight(getAsXHTML(false));
+			} catch (Exception e) {
+				height = 100;//TODO: magic number duzelt
+				System.out.println(e);
+			}
 			QuestionSizeMap.putSize(mapHtml, height);
 		}
+		System.out.println(questionNumber+": "+height);
 		return height;
 	}
-	
+
+	@Override
+	public Question getEmptySpaceAfterQuestion() {
+		if(emptySpaceHeight == null) emptySpaceHeight = defaultEmptySpaceAfterQuestion;
+		return new EmptySpace(emptySpaceHeight, paperType, columnType);
+	}
+
 }

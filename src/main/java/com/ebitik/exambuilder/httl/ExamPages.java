@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ebitik.exambuilder.ColumnType;
+import com.ebitik.exambuilder.Question;
 
 public class ExamPages {
 	
@@ -15,12 +16,12 @@ public class ExamPages {
 		this.columnType = columnType;
 	}
 	
-	public void addQuestion(String question, int height) {
-		boolean addedQuestion = getLastPage().addQuestion(question, height);
+	public void addQuestion(Question question) {
+		boolean addedQuestion = getLastPage().addQuestion(question);
 		//eklenemezse yeni sayfa olustur.
 		if(!addedQuestion) {
 			addNewPage();
-			addedQuestion = getLastPage().addQuestion(question, height);
+			addedQuestion = getLastPage().addQuestion(question);
 		}
 	}
 	

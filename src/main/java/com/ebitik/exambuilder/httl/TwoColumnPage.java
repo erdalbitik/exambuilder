@@ -3,43 +3,76 @@ package com.ebitik.exambuilder.httl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ebitik.exambuilder.ColumnType;
+import com.ebitik.exambuilder.EmptySpace;
+import com.ebitik.exambuilder.PaperType;
+import com.ebitik.exambuilder.Question;
+
 public class TwoColumnPage implements Page {
 	
-	private int leftBlankHeight = 982;
+	private int leftBlankHeight = 1100;
 	
-	private int rightBlankHeight = 982;
+	private int rightBlankHeight = 1100;
 	
 	private List<String> leftQuestions;
 	
 	private List<String> rightQuestions;
 	
 	@Override
-	public boolean addQuestion(String question, int height) {
+	public boolean addQuestion(Question question) {
 		//oncelikle sagda soru varmi diye bakilir. varsa oradan devam edilir.
 		if(getRightQuestions().size() > 0) {
-			return addRight(question, height);
+			return addRight(question);
 		}
 		
 		//sola deneyelim
-		boolean addedLeft = addLeft(question, height);
+		boolean addedLeft = addLeft(question);
 		//olmazsa saga deneyelim
 		if(!addedLeft) {
-			return addRight(question, height);
+			return addRight(question);
 		}
 		return addedLeft;
 	}
 	
-	private boolean addRight(String question, int height) {
-		if(height > rightBlankHeight) return false;
-		getRightQuestions().add(question);
+	private boolean addRight(Question question) {
+		int height = question.getHeight();
+		if(height > rightBlankHeight) {
+			//kalan bosluga bos alan ekleyelim
+			try {
+				getRightQuestions().add(new EmptySpace(rightBlankHeight, PaperType.A4, ColumnType.TWO_COLUMN).getAsXHTML(true));
+			} catch (Exception e) {
+			}
+			
+			rightBlankHeight = 0;
+			return false;
+		}
+		getRightQuestions().add(question.getAsXHTML(true));
 		rightBlankHeight -= height;
+		Question emptySpace = question.getEmptySpaceAfterQuestion();
+		if(emptySpace.getHeight() > 0 && emptySpace.getHeight() < rightBlankHeight) {
+			getRightQuestions().add(emptySpace.getAsXHTML(true));
+			rightBlankHeight -= emptySpace.getHeight();
+		}
 		return true;
 	}
 	
-	private boolean addLeft(String question, int height) {
-		if(height > leftBlankHeight) return false;
-		getLeftQuestions().add(question);
+	private boolean addLeft(Question question) {
+		int height = question.getHeight();
+		if(height > leftBlankHeight) {
+			try {
+				getLeftQuestions().add(new EmptySpace(leftBlankHeight, PaperType.A4, ColumnType.TWO_COLUMN).getAsXHTML(true));
+			} catch (Exception e) {
+			}
+			leftBlankHeight = 0;
+			return false;
+		}
+		getLeftQuestions().add(question.getAsXHTML(true));
 		leftBlankHeight -= height;
+		Question emptySpace = question.getEmptySpaceAfterQuestion();
+		if(emptySpace.getHeight() > 0 && emptySpace.getHeight() < leftBlankHeight) {
+			getLeftQuestions().add(emptySpace.getAsXHTML(true));
+			leftBlankHeight -= emptySpace.getHeight();
+		}
 		return true;
 	}
 

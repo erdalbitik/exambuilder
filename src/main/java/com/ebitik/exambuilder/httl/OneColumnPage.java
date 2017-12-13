@@ -3,22 +3,30 @@ package com.ebitik.exambuilder.httl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ebitik.exambuilder.Question;
+
 public class OneColumnPage implements Page {
 	
-	private int blankHeight = 1150;
+	private int blankHeight = 1100;
 	
 	private List<String> questions;
 	
 	@Override
-	public boolean addQuestion(String question, int height) {
-		boolean added = add(question, height);
+	public boolean addQuestion(Question question) {
+		boolean added = add(question);
 		return added;
 	}
 	
-	private boolean add(String question, int height) {
+	private boolean add(Question question) {
+		int height = question.getHeight();
 		if(height > blankHeight) return false;
-		getQuestions().add(question);
+		getQuestions().add(question.getAsXHTML(true));
 		blankHeight -= height;
+		Question emptySpace = question.getEmptySpaceAfterQuestion();
+		if(emptySpace.getHeight() > 0 && emptySpace.getHeight() < blankHeight) {
+			getQuestions().add(emptySpace.getAsXHTML(true));
+			blankHeight -= emptySpace.getHeight();
+		}
 		return true;
 	}
 

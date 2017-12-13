@@ -18,19 +18,15 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.VelocityEngine;
-import org.mapdb.DB;
-import org.mapdb.DBMaker;
-import org.mapdb.Serializer;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
 
 import com.ebitik.exambuilder.httl.ExamPages;
-import com.ebitik.exambuilder.service.PhantomService;
+import com.ebitik.exambuilder.service.PuppeteerService;
 import com.ebitik.exambuilder.util.VelocityUtil;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
@@ -80,16 +76,18 @@ public class ExamBuilder {
 		velocityEngine = new VelocityEngine(prop);
 	}
 	
-	
-
 	public void build() throws Exception {
 		ExamPages examPages = new ExamPages(columnType);
+		
+		//oncelikle headerin hemen altina bir bosulk ekleyelim.
+		questionList.add(0, new EmptySpace(50, paperType, columnType));
+		
 		for (Question question : questionList) {
-			examPages.addQuestion(question.getAsXHTML(true), question.getHeight());
+			examPages.addQuestion(question);
 			if(question instanceof Group) {
 				List<Question> groupQuestions = ((Group) question).getQuestionList();
 				for (Question gq : groupQuestions) {
-					examPages.addQuestion(gq.getAsXHTML(true), gq.getHeight());
+					examPages.addQuestion(gq);
 				}
 			}
 		}
@@ -113,8 +111,8 @@ public class ExamBuilder {
 		if(StringUtils.isEmpty(pdfPath) || !pdfPath.endsWith(".pdf")) {
 			pdfPath = fileName+".pdf";
 		}
-		//PuppeteerService.htmlToPdf(htmlFilePath, pdfPath);
-		PhantomService.htmlToPdf(tempFolder, fileName, pdfPath, addPageNumbers);
+		PuppeteerService.htmlToPdf(htmlFilePath, pdfPath);
+		//PhantomService.htmlToPdf(tempFolder, fileName, pdfPath, addPageNumbers);
 
 		//phantom dosyayi henuz olusturmamis olabilir. o nedenle 1 sn bekleyelim.
 		if (!Files.isRegularFile(Paths.get(pdfPath))) {

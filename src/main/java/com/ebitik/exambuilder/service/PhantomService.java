@@ -16,8 +16,7 @@ import com.ebitik.exambuilder.util.Util;
 
 public class PhantomService {
 	
-	@Deprecated
-	public static int getHtmlElementHeight(String html) throws Exception {
+	public static int getQuestionTableHeight(String html) throws Exception {
 		
 		//oncelikle htmli dosya olarak kaydedelim.
 		String tempFolder = System.getProperty("java.io.tmpdir");//Util.getParentFullPathResourceFolder("temp/not_delete.txt");
@@ -26,8 +25,8 @@ public class PhantomService {
 		FileUtils.writeStringToFile(new File(htmlFilePath), html,  StandardCharsets.UTF_8);
 		
 		//simdi dosyayi phantomlayalim
-		//String line = "phantomjs " +Util.getFileFullPathResourceFolder("phantomjs/height.js")+ " "+fileName +".html";
-		String line = "node " +Util.getFileFullPathResourceFolder("puppeteer/height.js")+ " "+htmlFilePath;
+		String line = "phantomjs " +Util.getFileFullPathResourceFolder("phantomjs/height.js")+ " "+fileName +".html";
+		//String line = "node " +Util.getFileFullPathResourceFolder("puppeteer/height.js")+ " "+htmlFilePath;
 		//DefaultExecutor exec = new DefaultExecutor();
 		//exec.setWorkingDirectory(new File(tempFolder));
 		//int exitValue = exec.execute(CommandLine.parse(line));
@@ -44,7 +43,7 @@ public class PhantomService {
 		//String height = exec.getStdOut();
 		height = height.replaceAll("(\\r|\\n)", "");
 		if(StringUtils.isNumeric(height)) {
-			System.out.println(height);
+			//System.out.println(height);
 			return Integer.parseInt(height);
 		}
 		return 0;

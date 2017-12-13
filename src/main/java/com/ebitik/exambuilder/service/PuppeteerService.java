@@ -38,7 +38,7 @@ public class PuppeteerService {
 		//String height = exec.getStdOut();
 		height = height.replaceAll("(\\r|\\n)", "");
 		if(StringUtils.isNumeric(height)) {
-			System.out.println(height);
+			//System.out.println(height);
 			return Integer.parseInt(height);
 		}
 		return 0;

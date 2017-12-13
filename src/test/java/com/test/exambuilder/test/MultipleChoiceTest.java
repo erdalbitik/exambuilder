@@ -3,6 +3,7 @@ package com.test.exambuilder.test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.StringJoiner;
 
 import org.junit.Test;
 
@@ -92,7 +93,7 @@ public class MultipleChoiceTest {
 	public void createTekKolonHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		
-		Question que = new Essay("1", PaperType.A4, ColumnType.ONE_COLUMN, "Osmanlının yıkılışını anlatınız?", "<div style='height: 300px;'>&nbsp;</div>");
+		Question que = new Essay("1", PaperType.A4, ColumnType.ONE_COLUMN, 300, "Osmanlının yıkılışını anlatınız?");
 		qList.add(que);
 		
 		for (int i = 1; i <= 6; i++) {
@@ -125,21 +126,26 @@ public class MultipleChoiceTest {
 	public void createCiftKolonFullHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		
-		Question que = new Essay("1", PaperType.A4, ColumnType.TWO_COLUMN, "Osmanlının yıkılışını anlatınız?", "<div style='height: 300px;'>&nbsp;</div>");
+		Question que = new Essay("1", PaperType.A4, ColumnType.TWO_COLUMN, 300, "Osmanlının yıkılışını anlatınız?");
 		qList.add(que);
 		
-		for (int i = 1; i <= 6; i++) {
+		for (int i = 1; i <= 19; i++) {
 			Question question = getRandomQuestion(i+1, ColumnType.TWO_COLUMN);
 			qList.add(question);
 		}
 		
+		Question q20 = getRandomQuestion(21, ColumnType.TWO_COLUMN, 100);
+		qList.add(q20);
+		
 		List<Question> groupQList = new ArrayList<>();
+		StringJoiner groupSira = new StringJoiner(", ");
 		for (int i = qList.size(); i < qList.size()+4; i++) {
 			Question question = getRandomQuestion(i+1, ColumnType.TWO_COLUMN);
+			groupSira.add((i+1)+"");
 			groupQList.add(question);
 		}
 		
-		Group group = new Group("5", PaperType.A4, ColumnType.TWO_COLUMN, "Aşağıdaki gruplanmış soruları cevaplayınız?", groupQList);
+		Group group = new Group(groupSira.toString()+" sorularını aşağıda verilen metine göre cevaplayınız.", PaperType.A4, ColumnType.TWO_COLUMN, "Aşağıdaki gruplanmış soruları cevaplayınız?", groupQList);
 		qList.add(group);
 		
 		ExamBuilder eb = new ExamBuilder();
@@ -158,7 +164,7 @@ public class MultipleChoiceTest {
 	public void createCiftKolonLowHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		
-		Question que = new Essay("1", PaperType.A4, ColumnType.TWO_COLUMN, "Osmanlının yıkılışını anlatınız?", "<div style='height: 300px;'>&nbsp;</div>");
+		Question que = new Essay("1", PaperType.A4, ColumnType.TWO_COLUMN, 300, "Osmanlının yıkılışını anlatınız?");
 		qList.add(que);
 		
 		for (int i = 1; i <= 20; i++) {
@@ -167,13 +173,16 @@ public class MultipleChoiceTest {
 		}
 		
 		List<Question> groupQList = new ArrayList<>();
+		StringJoiner groupSira = new StringJoiner(", ");
 		for (int i = qList.size(); i < qList.size()+4; i++) {
 			Question question = getSemiRandomQuestion(i+1, ColumnType.TWO_COLUMN);
+			groupSira.add((i+1)+"");
 			groupQList.add(question);
 		}
 		
-		Group group = new Group("5", PaperType.A4, ColumnType.TWO_COLUMN, "Aşağıdaki gruplanmış soruları cevaplayınız?", groupQList);
+		Group group = new Group(groupSira.toString()+" sorularını aşağıda verilen metine göre cevaplayınız.", PaperType.A4, ColumnType.TWO_COLUMN, "Aşağıdaki gruplanmış soruları cevaplayınız?", groupQList);
 		qList.add(group);
+		
 		
 		ExamBuilder eb = new ExamBuilder();
 		eb.columnType(ColumnType.TWO_COLUMN);
@@ -213,7 +222,7 @@ public class MultipleChoiceTest {
 			choice.setText("Ben var gitmek "+i);
 			choiceList.add(choice);
 		}
-		return new MultipleChoice("12", PaperType.A4, ColumnType.TWO_COLUMN, "Ben kaç yaşımdayım?", choiceList);
+		return new MultipleChoice("12", PaperType.A4, ColumnType.TWO_COLUMN, 60, "Ben kaç yaşımdayım?", choiceList);
 	}
 	
 	String[] soruList = {
@@ -330,11 +339,15 @@ public class MultipleChoiceTest {
 	
 	
 	private Question getRandomQuestion(int number, ColumnType columnType) {
-		return new MultipleChoice(number+"", PaperType.A4, columnType, soruList[random.nextInt(soruList.length)], getRandomChooseList());
+		return new MultipleChoice(number+"", PaperType.A4, columnType, 60, soruList[random.nextInt(soruList.length)], getRandomChooseList());
+	}
+	
+	private Question getRandomQuestion(int number, ColumnType columnType, int height) {
+		return new MultipleChoice(number+"", PaperType.A4, columnType, height, soruList[random.nextInt(soruList.length)], getRandomChooseList());
 	}
 	
 	private Question getSemiRandomQuestion(int number, ColumnType columnType) {
-		return new MultipleChoice(number+"", PaperType.A4, columnType, soruList[random.nextInt(1)], getSemiRandomChooseList());
+		return new MultipleChoice(number+"", PaperType.A4, columnType, 60, soruList[random.nextInt(1)], getSemiRandomChooseList());
 	}
 	
 	private List<Choice> getRandomChooseList() {

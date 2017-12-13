@@ -1,5 +1,7 @@
 package com.ebitik.exambuilder.httl;
 
+import com.ebitik.exambuilder.Question;
+
 public interface Page {
-	public boolean addQuestion(String question, int height);
+	public boolean addQuestion(Question question);
 }

@@ -125,7 +125,7 @@
 				padding-left: 1.5cm;
 				padding-top: 2.5cm;
 				padding-right: 1.5cm;
-				padding-bottom: 1.5cm;
+				padding-bottom: 0.0cm;
 			}
 			/* Use CSS Paged Media to switch from continuous documents to sheet-like documents with separate pages */
 			@page {
@@ -138,13 +138,17 @@
 				margin-left: 1.5cm;
 				margin-top: 2.5cm;
 				margin-right: 1.5cm;
-				margin-bottom: 1.5cm;
+				margin-bottom: 0.0cm;
 			}
 			
 			table { border-collapse: collapse; border-spacing: 0; }
 
 			/* valign */
 			th, td { vertical-align: top; }
+			
+			table, th, td {
+			   //border: 1px solid black;
+			}
 			
 			$css
 			
@@ -156,12 +160,15 @@
 		<div class="page" contenteditable="true">
 			<table style="width:100%;">
 			  <tr>
-			    <td>
+			    <td style="width:45%;">
 				    #foreach( $soruTableHtml in $page.leftQuestions )
 					$soruTableHtml
 					#end
 				</td>
-			    <td style="margin-left: 10px;">
+				<td style="width:10%;">
+				    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</td>
+			    <td style="width:45%;">
 			    	#foreach( $soruTableHtml in $page.rightQuestions )
 					$soruTableHtml
 					#end
