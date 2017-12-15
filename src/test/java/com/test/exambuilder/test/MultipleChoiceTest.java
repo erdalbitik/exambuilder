@@ -85,11 +85,11 @@ public class MultipleChoiceTest {
 		eb.questionList(qList);
 		eb.savePath("C:\\dev\\sil\\bih.pdf");
 		//eb.templatePath(Util.getFilePathFromResourceFolder("templates/two_column_blank_page.pdf"));
-		eb.headerText("MEHMETÇİK SELEN İLKOKULU FEN BİLGİSİ SINAVI 2017");
+		eb.defaultHeader("MEHMETÇİK SELEN İLKOKULU FEN BİLGİSİ SINAVI 2017");
 		eb.build();
 	}
 	
-	///@Test
+	@Test
 	public void createTekKolonHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		
@@ -113,11 +113,11 @@ public class MultipleChoiceTest {
 		ExamBuilder eb = new ExamBuilder();
 		eb.columnType(ColumnType.ONE_COLUMN);
 		eb.questionList(qList);
-		eb.savePath("C:\\dev\\sile\\bih.pdf");
+		eb.savePath("C:\\dev\\sile\\bih1.pdf");
 		eb.copyProtection(Boolean.TRUE);
 		eb.smallStamper("erdal");
 		eb.bigStamper("CUMALI");
-		eb.headerText("MEHMETÇİK SELEN İLKOKULU FEN BİLGİSİ SINAVI 2017");
+		eb.defaultHeader("MEHMETÇİK SELEN İLKOKULU FEN BİLGİSİ SINAVI 2017");
 		//eb.templatePath(Util.getFilePathFromResourceFolder("templates/two_column_blank_page.pdf"));
 		eb.build();
 	}
@@ -155,12 +155,12 @@ public class MultipleChoiceTest {
 		eb.copyProtection(Boolean.TRUE);
 		eb.smallStamper("erdal.bitik");
 		eb.bigStamper("WATERMARK");
-		eb.headerText("MEHMETÇİK SELEN İLKOKULU 7/A FEN BİLGİSİ SINAVI 2017");
+		eb.defaultHeader("MEHMETÇİK SELEN İLKOKULU 7/A FEN BİLGİSİ SINAVI 2017");
 		//eb.templatePath(Util.getFilePathFromResourceFolder("templates/two_column_blank_page.pdf"));
 		eb.build();
 	}
 	
-	//@Test
+	@Test
 	public void createCiftKolonLowHtml() throws Exception {
 		List<Question> qList = new ArrayList<>();
 		
@@ -191,7 +191,8 @@ public class MultipleChoiceTest {
 		eb.copyProtection(Boolean.TRUE);
 		eb.smallStamper("erdal.bitik");
 		eb.bigStamper("WATERMARK");
-		eb.headerText("MEHMETÇİK SELEN İLKOKULU 7/A FEN BİLGİSİ SINAVI 2017");
+		eb.defaultHeader("MEHMETÇİK SELEN İLKOKULU 7/A FEN BİLGİSİ SINAVI 2017");
+		eb.firstPageHeader("CUMALI BAYER İLKOKULU 7/A FEN BİLGİSİ SINAVI 2017");
 		//eb.templatePath(Util.getFilePathFromResourceFolder("templates/two_column_blank_page.pdf"));
 		eb.build();
 	}
@@ -210,7 +211,7 @@ public class MultipleChoiceTest {
 		eb.copyProtection(Boolean.TRUE);
 		eb.smallStamper("erdal");
 		eb.bigStamper("CUMALI");
-		eb.headerText("MEHMETÇİK SELEN İLKOKULU FEN BİLGİSİ SINAVI 2017");
+		eb.defaultHeader("MEHMETÇİK SELEN İLKOKULU FEN BİLGİSİ SINAVI 2017");
 		//eb.templatePath(Util.getFilePathFromResourceFolder("templates/two_column_blank_page.pdf"));
 		eb.build();
 	}

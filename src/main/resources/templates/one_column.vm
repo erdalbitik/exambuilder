@@ -119,9 +119,9 @@
 
 				/* Reflect the actual page margin/padding on paper in the screen rendering (must match margin from @page rule) */
 				padding-left: 1.5cm;
-				padding-top: 2cm;
+				padding-top: 0.0cm;
 				padding-right: 1.5cm;
-				padding-bottom: 1.0cm;
+				padding-bottom: 0.0cm;
 			}
 			/* Use CSS Paged Media to switch from continuous documents to sheet-like documents with separate pages */
 			@page {
@@ -132,9 +132,9 @@
 
 				/* Margin per single side of the page */
 				margin-left: 1.5cm;
-				margin-top: 2cm;
+				margin-top: 0.0cm;
 				margin-right: 1.5cm;
-				margin-bottom: 1.0cm;
+				margin-bottom: 0.0cm;
 			}
 			
 			table { border-collapse: collapse; border-spacing: 0; }
@@ -150,8 +150,8 @@
 		#if ($pages.size() != 0)
 		#foreach( $page in $pages )
 		<div class="page" contenteditable="true">
-			#if ($page.questions.size() != 0)
-			<table style="width:90%;">
+			<div style="width:100%; height:2.5cm; position: relative; vertical-align: middle; margin-top:auto; margin-bottom:auto; text-align:center; overflow: hidden;"> #if ($foreach.count == 1 && $!firstPageHeader) $firstPageHeader #else $foreach.count $defaultHeader #end </div>
+			<table style="width:100%; margin-top:0cm;">
 			  <tr>
 			    <td>
 				    #foreach( $soruTableHtml in $page.questions )
@@ -160,7 +160,6 @@
 				</td>
 			  </tr>
 			</table>
-			#end
 		</div>
 		#end
 		#end
