@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.ebitik.exambuilder.service.PuppeteerService;
 import com.ebitik.exambuilder.service.QuestionSizeMap;
+import com.ebitik.exambuilder.service.Service;
+import com.ebitik.exambuilder.type.ColumnType;
+import com.ebitik.exambuilder.type.PaperType;
 import com.ebitik.exambuilder.util.Util;
 
 public class Group implements Question {
@@ -65,13 +67,13 @@ public class Group implements Question {
 	}
 
 	@Override
-	public int getHeight() {
+	public int getHeight(Service service) {
 		if(height != null && height > 0) return height;
 		if(StringUtils.isEmpty(xhtml)) xhtml = getAsXHTML(false);
 		height = QuestionSizeMap.getSize(xhtml);
 		if(height == null) {
 			try {
-				height = PuppeteerService.getQuestionTableHeight(getAsXHTML(false));
+				height = service.getQuestionTableHeight(getAsXHTML(false));
 			} catch (Exception e) {
 				height = 100;//TODO: magic number duzelt
 				System.out.println(e);

@@ -1,4 +1,4 @@
-package com.ebitik.exambuilder;
+package com.ebitik.exambuilder.type;
 
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Rectangle;

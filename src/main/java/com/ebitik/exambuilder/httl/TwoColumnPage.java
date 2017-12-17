@@ -3,10 +3,11 @@ package com.ebitik.exambuilder.httl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ebitik.exambuilder.ColumnType;
 import com.ebitik.exambuilder.EmptySpace;
-import com.ebitik.exambuilder.PaperType;
 import com.ebitik.exambuilder.Question;
+import com.ebitik.exambuilder.service.Service;
+import com.ebitik.exambuilder.type.ColumnType;
+import com.ebitik.exambuilder.type.PaperType;
 
 public class TwoColumnPage implements Page {
 	
@@ -17,6 +18,12 @@ public class TwoColumnPage implements Page {
 	private List<String> leftQuestions;
 	
 	private List<String> rightQuestions;
+	
+	private Service service;
+	
+	public TwoColumnPage(Service service) {
+		this.service = service;
+	}
 	
 	@Override
 	public boolean addQuestion(Question question) {
@@ -35,7 +42,7 @@ public class TwoColumnPage implements Page {
 	}
 	
 	private boolean addRight(Question question) {
-		int height = question.getHeight();
+		int height = question.getHeight(service);
 		if(height > rightBlankHeight) {
 			//kalan bosluga bos alan ekleyelim
 			try {
@@ -49,15 +56,16 @@ public class TwoColumnPage implements Page {
 		getRightQuestions().add(question.getAsXHTML(true));
 		rightBlankHeight -= height;
 		Question emptySpace = question.getEmptySpaceAfterQuestion();
-		if(emptySpace.getHeight() > 0 && emptySpace.getHeight() < rightBlankHeight) {
+		int emptySpaceHeight = emptySpace.getHeight(service);
+		if(emptySpaceHeight > 0 && emptySpaceHeight < rightBlankHeight) {
 			getRightQuestions().add(emptySpace.getAsXHTML(true));
-			rightBlankHeight -= emptySpace.getHeight();
+			rightBlankHeight -= emptySpaceHeight;
 		}
 		return true;
 	}
 	
 	private boolean addLeft(Question question) {
-		int height = question.getHeight();
+		int height = question.getHeight(service);
 		if(height > leftBlankHeight) {
 			try {
 				getLeftQuestions().add(new EmptySpace(leftBlankHeight, PaperType.A4, ColumnType.TWO_COLUMN).getAsXHTML(true));
@@ -69,9 +77,10 @@ public class TwoColumnPage implements Page {
 		getLeftQuestions().add(question.getAsXHTML(true));
 		leftBlankHeight -= height;
 		Question emptySpace = question.getEmptySpaceAfterQuestion();
-		if(emptySpace.getHeight() > 0 && emptySpace.getHeight() < leftBlankHeight) {
+		int emptySpaceHeight = emptySpace.getHeight(service);
+		if(emptySpaceHeight > 0 && emptySpaceHeight < leftBlankHeight) {
 			getLeftQuestions().add(emptySpace.getAsXHTML(true));
-			leftBlankHeight -= emptySpace.getHeight();
+			leftBlankHeight -= emptySpaceHeight;
 		}
 		return true;
 	}

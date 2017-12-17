@@ -14,9 +14,9 @@ import org.apache.commons.lang3.StringUtils;
 import com.ebitik.exambuilder.util.Util;
 
 
-public class PuppeteerService {
+public class PuppeteerService implements Service {
 	
-	public static int getQuestionTableHeight(String html) throws Exception {
+	public int getQuestionTableHeight(String html) throws Exception {
 		
 		//oncelikle htmli dosya olarak kaydedelim.
 		String tempFolder = System.getProperty("java.io.tmpdir");//Util.getParentFullPathResourceFolder("temp/not_delete.txt");
@@ -44,7 +44,7 @@ public class PuppeteerService {
 		return 0;
 	}
 	
-	public static void htmlToPdf(String htmlFilePath, String pdfPath) throws Exception {
+	public void htmlToPdf(String htmlFilePath, String pdfPath) throws Exception {
 		//String line = "phantomjs " +Util.getFileFullPathResourceFolder("phantomjs/html2pdf.js")+ " "+fileName +".html "+pdfPath;
 		String line = "node " +Util.getFileFullPathResourceFolder("puppeteer/html2pdf.js")+ " "+htmlFilePath +" "+pdfPath;
 		DefaultExecutor exec = new DefaultExecutor();

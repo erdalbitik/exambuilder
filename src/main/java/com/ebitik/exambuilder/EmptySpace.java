@@ -2,6 +2,10 @@ package com.ebitik.exambuilder;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.ebitik.exambuilder.service.Service;
+import com.ebitik.exambuilder.type.ColumnType;
+import com.ebitik.exambuilder.type.PaperType;
+
 public class EmptySpace implements Question {
 	
 	private PaperType paperType;
@@ -37,7 +41,7 @@ public class EmptySpace implements Question {
 	}
 
 	@Override
-	public int getHeight() {
+	public int getHeight(Service service) {
 		return height;
 	}
 

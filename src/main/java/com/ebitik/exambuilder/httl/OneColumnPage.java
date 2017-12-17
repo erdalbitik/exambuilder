@@ -4,12 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ebitik.exambuilder.Question;
+import com.ebitik.exambuilder.service.Service;
 
 public class OneColumnPage implements Page {
 	
 	private int blankHeight = 1100;
 	
 	private List<String> questions;
+	
+	private Service service;
+	
+	public OneColumnPage(Service service) {
+		this.service = service;
+	}
 	
 	@Override
 	public boolean addQuestion(Question question) {
@@ -18,14 +25,15 @@ public class OneColumnPage implements Page {
 	}
 	
 	private boolean add(Question question) {
-		int height = question.getHeight();
+		int height = question.getHeight(service);
 		if(height > blankHeight) return false;
 		getQuestions().add(question.getAsXHTML(true));
 		blankHeight -= height;
 		Question emptySpace = question.getEmptySpaceAfterQuestion();
-		if(emptySpace.getHeight() > 0 && emptySpace.getHeight() < blankHeight) {
+		int emptySpaceHeight = emptySpace.getHeight(service);
+		if(emptySpaceHeight > 0 && emptySpaceHeight < blankHeight) {
 			getQuestions().add(emptySpace.getAsXHTML(true));
-			blankHeight -= emptySpace.getHeight();
+			blankHeight -= emptySpaceHeight;
 		}
 		return true;
 	}

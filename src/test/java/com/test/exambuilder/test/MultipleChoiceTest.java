@@ -8,18 +8,21 @@ import java.util.StringJoiner;
 import org.junit.Test;
 
 import com.ebitik.exambuilder.Choice;
-import com.ebitik.exambuilder.ColumnType;
 import com.ebitik.exambuilder.Essay;
 import com.ebitik.exambuilder.ExamBuilder;
 import com.ebitik.exambuilder.Group;
 import com.ebitik.exambuilder.MultipleChoice;
-import com.ebitik.exambuilder.PaperType;
 import com.ebitik.exambuilder.Question;
 import com.ebitik.exambuilder.service.PuppeteerService;
+import com.ebitik.exambuilder.service.Service;
+import com.ebitik.exambuilder.type.ColumnType;
+import com.ebitik.exambuilder.type.PaperType;
 
 public class MultipleChoiceTest {
 	
 	Random random = new Random();
+	
+	Service service = new PuppeteerService();
 
 	/*@Test
 	public void getHtmlTable() throws Exception {
@@ -70,7 +73,7 @@ public class MultipleChoiceTest {
 	///@Test
 	public void getSoruHeight() throws Exception {
 		String xhtml = getQuestion().getAsXHTML(false);
-		int elementHeight = PuppeteerService.getQuestionTableHeight(xhtml);
+		int elementHeight = service.getQuestionTableHeight(xhtml);
 		System.out.println(elementHeight);
 	}
 	

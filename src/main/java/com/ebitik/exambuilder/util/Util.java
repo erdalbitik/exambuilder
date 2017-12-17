@@ -13,8 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
 
-import com.ebitik.exambuilder.ColumnType;
-import com.ebitik.exambuilder.PaperType;
+import com.ebitik.exambuilder.type.ColumnType;
+import com.ebitik.exambuilder.type.PaperType;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.Phrase;

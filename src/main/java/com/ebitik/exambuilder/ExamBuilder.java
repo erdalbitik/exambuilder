@@ -1,8 +1,6 @@
 package com.ebitik.exambuilder;
 
 import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,11 +20,12 @@ import java.util.UUID;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.VelocityEngine;
-import org.w3c.dom.NodeList;
-import org.w3c.tidy.Tidy;
 
 import com.ebitik.exambuilder.httl.ExamPages;
 import com.ebitik.exambuilder.service.PuppeteerService;
+import com.ebitik.exambuilder.service.Service;
+import com.ebitik.exambuilder.type.ColumnType;
+import com.ebitik.exambuilder.type.PaperType;
 import com.ebitik.exambuilder.util.VelocityUtil;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
@@ -64,6 +63,8 @@ public class ExamBuilder {
 	String defaultHeader = null;
 	
 	String firstPageHeader = null;
+	
+	Service pdfService = new PuppeteerService();
 
 	int fontSize = 12;
 
@@ -79,7 +80,7 @@ public class ExamBuilder {
 	}
 	
 	public void build() throws Exception {
-		ExamPages examPages = new ExamPages(columnType);
+		ExamPages examPages = new ExamPages(pdfService, columnType);
 		
 		//oncelikle headerin hemen altina bir bosulk ekleyelim.
 		//questionList.add(0, new EmptySpace(50, paperType, columnType));
@@ -115,7 +116,7 @@ public class ExamBuilder {
 		if(StringUtils.isEmpty(pdfPath) || !pdfPath.endsWith(".pdf")) {
 			pdfPath = fileName+".pdf";
 		}
-		PuppeteerService.htmlToPdf(htmlFilePath, pdfPath);
+		pdfService.htmlToPdf(htmlFilePath, pdfPath);
 		//PhantomService.htmlToPdf(tempFolder, fileName, pdfPath, addPageNumbers);
 
 		//phantom dosyayi henuz olusturmamis olabilir. o nedenle 1 sn bekleyelim.
@@ -308,6 +309,11 @@ public class ExamBuilder {
 
 	public ExamBuilder questionList(List<Question> questionList) {
 		this.questionList = questionList;
+		return this;
+	}
+	
+	public ExamBuilder questionList(Service service) {
+		this.pdfService = service;
 		return this;
 	}
 

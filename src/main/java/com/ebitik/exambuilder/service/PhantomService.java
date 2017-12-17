@@ -14,9 +14,9 @@ import org.apache.commons.lang3.StringUtils;
 import com.ebitik.exambuilder.util.Util;
 
 
-public class PhantomService {
+public class PhantomService implements Service {
 	
-	public static int getQuestionTableHeight(String html) throws Exception {
+	public int getQuestionTableHeight(String html) throws Exception {
 		
 		//oncelikle htmli dosya olarak kaydedelim.
 		String tempFolder = System.getProperty("java.io.tmpdir");//Util.getParentFullPathResourceFolder("temp/not_delete.txt");
@@ -48,12 +48,12 @@ public class PhantomService {
 		}
 		return 0;
 	}
-	
-	public static void htmlToPdf(String tempFolder, String fileName, String pdfPath, boolean printPageNumber) throws Exception {
-		String line = "phantomjs " +Util.getFileFullPathResourceFolder("phantomjs/html2pdf.js")+ " "+fileName +".html "+pdfPath+ " "+printPageNumber;
-		//String line = "node " +Util.getFileFullPathResourceFolder("puppeteer/html2pdf.js")+ " "+htmlFilePath +" "+pdfPath;
+
+	@Override
+	public void htmlToPdf(String htmlFilePath, String pdfPath) throws Exception {
+		String line = "phantomjs " +Util.getFileFullPathResourceFolder("phantomjs/html2pdf.js")+ " "+new File(htmlFilePath).getName() +".html "+pdfPath+ " "+true;
 		DefaultExecutor exec = new DefaultExecutor();
-		exec.setWorkingDirectory(new File(tempFolder));
+		exec.setWorkingDirectory(new File(Util.getParentFullPathResourceFolder(htmlFilePath)));
 		exec.execute(CommandLine.parse(line));
 	}
 

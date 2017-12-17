@@ -3,8 +3,9 @@ package com.ebitik.exambuilder.httl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ebitik.exambuilder.ColumnType;
 import com.ebitik.exambuilder.Question;
+import com.ebitik.exambuilder.service.Service;
+import com.ebitik.exambuilder.type.ColumnType;
 
 public class ExamPages {
 	
@@ -12,7 +13,10 @@ public class ExamPages {
 	
 	private ColumnType columnType;
 	
-	public ExamPages(ColumnType columnType) {
+	private Service service;
+	
+	public ExamPages(Service service, ColumnType columnType) {
+		this.service = service;
 		this.columnType = columnType;
 	}
 	
@@ -32,9 +36,9 @@ public class ExamPages {
 	
 	private void addNewPage() {
 		if(ColumnType.ONE_COLUMN.equals(columnType)) {
-			pages.add(new OneColumnPage());
+			pages.add(new OneColumnPage(service));
 		} else {
-			pages.add(new TwoColumnPage());
+			pages.add(new TwoColumnPage(service));
 		}
 	}
 

@@ -1,4 +1,4 @@
-package com.ebitik.exambuilder;
+package com.ebitik.exambuilder.type;
 
 public enum ColumnType {
 
