@@ -7,13 +7,13 @@
 * Bu kütüphane verilen soruları pdf dokumanına basar. 
 * version 0.0.1
 
-### Maven ###
+### Maven kurulumu ve kütüphanenin yüklenmesi ###
 
-* Private maven repositorymiz (archiva gibi) olmadığından bu kıutuphaneyi aşağıdaki yontemle kullanmak zorundayız.
-* Öncelikle sisteminize maven kurulumu yapın. Bunun için maven indirip bin klasorunu path içinde gostermeniz gerekiyor.
+* Private maven repositorymiz (archiva gibi) olmadığından bu kütuphaneyi aşağıdaki yontemle kullanmak gerekiyor.
+* Öncelikle sisteminize maven kurulumu yapın. Bunun için maven indirip bin klasorunu path değişkeni olarak gostermeniz gerekiyor.
 * JAVA_HOME set edilmesi lazım. bunun için jdk klasorunuzu gosterin
-* git kurulumu yapın. bunun için https://www.atlassian.com/git/tutorials/install-git adresinden indirip kurun
-* git clone https://erdalbitik@bitbucket.org/sinavapp/exambuilder.git komutunu çalıştırın. Parola ve kullanıcı adınızı girin.
+* git kurulumu yapın. bunun için https://www.atlassian.com/git/tutorials/install-git adresinden indirip kurun.
+* git clone https://github.com/erdalbitik/exambuilder.git komutunu çalıştırın. Parola ve kullanıcı adınızı girin.
 * cd exambuilder diyerek proje klasorune girin.
 * mvn clean install diyerek kutuphaneyi local maven'iniza eklemiş olursunuz.
 * Bu adımdan itibaren projenize dependency olarak ekleyebilirsiniz.
@@ -35,33 +35,30 @@
 * Grup soruları
 * Açık uçlu (Essay- Klasik) soru
 * Herhangi bir dilde baskı
-* buyuk Watermark (stamp)
+* Buyuk Watermark (stamp)
 * Kucuk watermark
 * PDF seç-kopyala engelleme
-* sayfa numarası gösterme
-* sınav bitti etiketi
+* Sayfa numarası gösterme
+* Sınav bitti etiketi
 * Gömülü header (ad-soyad-no alanları)
 * Verilen başlığı tek satırda gösterme (Sınav adı gibi)
 * Soruları verilen sıraya gore basma
 
 ### Eksiklikler && Yapılması Gereken İşler ###
 
-* 20 soruluk bir pdf oluşturma işlemi eğer soruların boyutu onceden belirlenmediyse 20-25 sn surebiliyor. (Kendi laptopumda)
-  * Bir soru daha once pdf 'e donusturulduyse exambuilder bu sorunun boyutunu user_home directorysinde tuttugu bir db de kaydeder. Sonraki işlemler oldukça hızlı olur. 20 sn'lik bir işlem 7 saniyeye düştü. 
 * HTML formatında header ve footer ekleme ozelliğinin olmayışı. Bunu ilerleyen aşamada yapmaya çalışacağım. 
 * Gömülü kullanılan Türkçe label'lar. Örneğin Ad - soyad, Sınav Bitti, Sonraki sayfaya geçiniz gibi. Bunların verilen locale ile kullanılması lazım. Kullanıcı kaydedilirken onun locale bilgisi de alınmalı.
-* Maven repository problemi. Bunun için private repository kullanmak lazım yada bir maven repository bulmak lazım.
 * Çoktan seçmeli bir sorunun tüm şıkları belli bir kısalıktaysa bunun şıklarını altalta gostermek yerine yan yana da gosterebilmeliyiz. Bu sayede yerden kazanç sağlamış oluruz.
 * Sorular arası boşluğun kullanıcı tarafından verilebiliyor olması lazım. Şu anda sabit bir boşluk var. Bunu yapmamız işlem gerfektiren sorular için kolaylık sağlayacak.
 
 ### Kurulum ###
 
-* Bu kütüphanenin kullanılması için öncelikle bazı uygulamaların hazır olması gerekiyor. 
-* Bunlar phantomjs ve chrome puppeteer dir. Şağıda bunları nasıl kuracağınızdan bahsedilmiştir.
-* http://phantomjs.org/download.html adresinden 2.1.1 phantomjs 'i indirrerek kurun. Bunun komut satırında olduğundan emin olun (PATH'e eklenmelidir.)
-* Öncelikle nodejs kululmalidir. v7.6.0 LTE ve yukarısından birini kurun. 
-* sonrasında yarn kurmanız gerekiyor. https://yarnpkg.com/lang/en/docs/install/ adresinden indirip kurabilirsiniz. 
-* ardından yarn add puppeteer komutunu çalıştırın. puppeteer komutunun komut satırına geldiğinden emin olun.
+* Bu kütüphanenin kullanılması için öncelikle bazı uygulamaların kurulu olması gerekiyor. 
+* Bunlar phantomjs ve/veya chrome puppeteer dir. Aşağıda bunları nasıl kuracağınızdan bahsedilmiştir.
+* PhantomJS: http://phantomjs.org/download.html adresinden 2.1.1 phantomjs 'i indirerek kurun. Bunun komut satırında olduğundan emin olun (PATH'e eklenmelidir.)
+* Puppeteer: Öncelikle nodejs güncel versiyonlardan biri kurulmalidir.
+* Sonrasında yarn kurmanız gerekiyor. https://yarnpkg.com/lang/en/docs/install/ adresinden indirip kurabilirsiniz. 
+* Ardından yarn add puppeteer komutunu çalıştırın. Puppeteer komutunun komut satırına geldiğinden emin olun.
 
 ### Kullanım ###
 
