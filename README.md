@@ -13,7 +13,7 @@
 * Öncelikle sisteminize maven kurulumu yapın. Bunun için maven indirip bin klasorunu path değişkeni olarak gostermeniz gerekiyor.
 * JAVA_HOME set edilmesi lazım. bunun için jdk klasorunuzu gosterin
 * git kurulumu yapın. bunun için https://www.atlassian.com/git/tutorials/install-git adresinden indirip kurun.
-* git clone https://github.com/erdalbitik/exambuilder.git komutunu çalıştırın. Parola ve kullanıcı adınızı girin.
+* git clone https://github.com/erdalbitik/exambuilder.git komutunu çalıştırın.
 * cd exambuilder diyerek proje klasorune girin.
 * mvn clean install diyerek kutuphaneyi local maven'iniza eklemiş olursunuz.
 * Bu adımdan itibaren projenize dependency olarak ekleyebilirsiniz.
